@@ -22,8 +22,11 @@ streamlit.dataframe(fruits_to_show)
 
 import requests
 streamlit.header('🥣 Breakfast Menu recommendations !!!')
+fruit_choice = streamlit.text_input('what fruit information would you like to have ?','Kiwi')
+streamlit.write('The user entered',fruit_choice)
 # Display the table on the page.
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
+
 
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # write your own comment - what does this do?
