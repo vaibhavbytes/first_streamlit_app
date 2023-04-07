@@ -4,7 +4,7 @@ import snowflake.connector
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor() 
-my_cur.execute("user warehouse pc_rivery_wh; use role pc_rivery_role")
+my_cur.execute("use warehouse pc_rivery_wh; use role pc_rivery_role")
 my_cur.execute("Select * from pc_rivery_db.public.fruit_load_list")
 my_data_row = my_cur.fetchone()
 streamlit.text("The fruit load list contains")
