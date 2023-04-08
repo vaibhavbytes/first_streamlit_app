@@ -39,16 +39,6 @@ def get_fruityvice_data(this_fruit_choice):
 
 streamlit.header('🥣 Fruityvise fruit advice !!!')
 
-try:
-   fruit_choice = streamlit.text_input('What fruit would you like to add ?','Kiwi')
-   if not fruit_choice:
-      streamlit.error("Please select a fruit to get information")
-   else:
-      back_from_function = get_fruityvice_data(fruit_choice)
-      streamlit.dataframe(fruit_choice)
-except:
-  streamlit.write("An exception occurred")
-
 def insert_row_snowflake(new_fruit):
    with my_cnx.cursor() as my_cur:
       my_cur.execute("insert into fruit_load_list values ('from streamlit')")
