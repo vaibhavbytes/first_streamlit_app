@@ -9,15 +9,6 @@ my_cur = my_cnx.cursor()
 my_cur.execute("Select * from pc_rivery_db.public.fruit_load_list")
 my_data_rows = my_cur.fetchall()
 streamlit.header("My Mom's new healthier Diner")
-#streamlit.dataframe(my_data_rows)
-
-
-#my_cur.execute("Insert into Fruit_Load_List values('from Streamlit')")
-#my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
-#my_data_row = my_cur.fetchone()
-#streamlit.text("Hello from Snowflake:")
-#streamlit.text(my_data_row)
-
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index('Fruit')
 
@@ -54,6 +45,5 @@ add_my_fruit = streamlit.text_input('View our fruit list. Add your fruit ?')
 if streamlit.button('Get fruit list'):
    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
    my_data_rows = get_fruit_load_list()
-   my_cnx.close()
    back_from_function = insert_row_snowflake(add_my_fruit)
    streamlit.text(back_from_function)
