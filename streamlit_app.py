@@ -51,8 +51,7 @@ except:
 
 def insert_row_snowflake(new_fruit):
    with my_cnx_cursor() as my_cur:
-      my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-      my_cur = my_cnx.cursor()
+      my_cur = snowflake.connector.connect(**streamlit.secrets["snowflake"])
       my_cur.execute("insert into fruit_load_list values ('from streamlit')")
       return "Thanks for adding "+new_fruit
 
