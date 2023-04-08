@@ -1,6 +1,11 @@
 import streamlit
 import pandas
+import requests
 import snowflake.connector
+from urllib.error import URLError
+
+#Dont run from here
+streamlit.stop()
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
@@ -8,8 +13,9 @@ my_cur.execute("Select * from pc_rivery_db.public.fruit_load_list")
 my_data_rows = my_cur.fetchall()
 streamlit.header("The fruit load list contains")
 streamlit.dataframe(my_data_rows)
-my_cur.execute("Insert into Fruit_Load_List values('from Streamlit')")
 
+
+my_cur.execute("Insert into Fruit_Load_List values('from Streamlit')")
 my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
 my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
@@ -33,22 +39,22 @@ fruits_selected=streamlit.multiselect("Pick some fruits:", list(my_fruit_list.in
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
 
+#Section to display fruityvise API Responce
 
-import requests
-streamlit.header('🥣 Breakfast Menu advice !!!')
-fruit_choice = streamlit.text_input('what fruit information would you like to have ?','Kiwi')
-streamlit.write('The user entered',fruit_choice)
-# Display the table on the page.
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
+streamlit.header('🥣 Fruityvise fruit advice !!!')
+try:
+   fruit_choice = streamlit.text_input('what fruit information would you like to have ?','Kiwi')
+   if not fruit_chouce:
+      streamlit.error("Please select a fruit to get information")
+   else:
+      fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
+      fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+      streamlit.dataframe(fruityvice_normalized)
+      fruit_choice1 = streamlit.text_input('What fruit would you like to add ?','Kiwi')
+      streamlit.write('The user entered',fruit_choice1)
+except URLError as e:
+   streamlit.error()
 
-fruit_choice1 = streamlit.text_input('What fruit would you like to add ?','Kiwi')
-
-streamlit.write('The user entered',fruit_choice1)
-
-
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-# write your own comment - what does this do?
-streamlit.dataframe(fruityvice_normalized)
 
 
 
