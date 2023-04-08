@@ -44,9 +44,10 @@ def insert_row_snowflake(new_fruit):
       my_cur.execute("insert into fruit_load_list values ('"+new_fruit+"')")
       return "Thanks for adding "+new_fruit
 
-   def get_fruit_load_list():
-      with my_cnx.cursor() as my_cur:
-         my_cur.execute("select * from fruit_load_list")
+def get_fruit_load_list():
+   with my_cnx.cursor() as my_cur:
+      my_cur.execute("select * from fruit_load_list")
+      return my_cur.fetchall()
          
 
 add_my_fruit = streamlit.text_input('View our fruit list. Add your fruit ?')
