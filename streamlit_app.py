@@ -4,9 +4,6 @@ import requests
 import snowflake.connector
 from urllib.error import URLError
 
-#Dont run from here
-#streamlit.stop()
-
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("Select * from pc_rivery_db.public.fruit_load_list")
@@ -48,3 +45,5 @@ try:
    else:
       back_from_function = get_fruityvice_data(fruit_choice)
       streamlit.dataframe(fruit_choice)
+except:
+  streamlit.write("An exception occurred")
