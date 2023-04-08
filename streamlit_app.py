@@ -38,8 +38,8 @@ def get_fruityvice_data(this_fruit_choice):
    return fruityvice_normalized
 
 streamlit.header('🥣 Fruityvise fruit advice !!!')
+
 try:
-   fruit_choice = streamlit.text_input('What fruit would you like to add ?','Kiwi')
    fruit_choice = streamlit.text_input('What fruit would you like to add ?')
    if not fruit_choice:
       streamlit.error("Please select a fruit to get information")
@@ -50,7 +50,8 @@ except:
   streamlit.write("An exception occurred")
 
 def insert_row_snowflake(new_fruit):
-   with my_cnx_cursor() as my_cur:
+   with my_cnx_cursor() as my_cur
+      my_cur = my_cnx.cursor()
       my_cur.execute("insert into fruit_load_list values ('from streamlit')")
       return "Thanks for adding "+new_fruit
 
